@@ -1,20 +1,39 @@
 import React from 'react';
 
 class GoogleAuth extends React.Component {
-    componentDidMount() {
-        window.gapi.load('client:auth2', () => {
-            window.gapi.client.init({
-                clientId: '544043580697-kegoee4jlm3qckil9god2s8jq0fdauu2.apps.googleusercontent.com',
-                scope: 'email'
-            })
+  state = { isSignedIn: null };
+  componentDidMount() {
+    window.gapi.load('client:auth2', () => {
+      window.gapi.client
+        .init({
+          clientId: '544043580697-kegoee4jlm3qckil9god2s8jq0fdauu2.apps.googleusercontent.com',
+          scope: 'email',
         })
-    }
+        .then(() => {
+          this.auth = window.gapi.auth2.getAuthInstance(); //guardar una referencia para saber si el usuario se ha autenticado
+          this.setState({ isSignedIn: this.auth.isSignedIn.get() });
+          this.auth.isSignedIn.listen((this.onAuthChange))
+        });
+    });
+  }
 
-    render() {
-        return (
-            <div>Google Auth</div>
-        )
+  onAuthChange = () => {
+    this.setState({ isSignedIn: this.auth.isSignedIn.get() })
+  }
+
+  renderAuthButton() {
+    if (this.state.isSignedIn === null) {
+      return <div>I don know if we are signed in</div>;
+    } else if (this.state.isSignedIn) {
+      return <div>Yes Im signed in</div>;
+    } else {
+      return <div>We dont signed in</div>;
     }
+  }
+
+  render() {
+    return <div>{this.renderAuthButton()}</div>;
+  }
 }
 
 export default GoogleAuth;
