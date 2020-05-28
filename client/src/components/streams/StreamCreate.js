@@ -11,14 +11,20 @@ class StreamCreate extends React.Component {
     );
   }
 
+  onSubmit(formValues){ //guarda como props los valores de los campos del formulario
+    console.log(formValues);    
+  }
+
   render() {
     return (
-      <form className="ui form">
+      <form className="ui form" onSubmit={this.props.handleSubmit(this.onSubmit)}>
         <Field name="title" component={this.renderInput} label="Enter title" />
         <Field name="description" component={this.renderInput} label="Enter description" />
+        <button className="ui button primary">Create</button>
       </form>
     );
   }
+
 }
 
 export default reduxForm({
