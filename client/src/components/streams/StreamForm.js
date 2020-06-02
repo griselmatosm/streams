@@ -30,7 +30,7 @@ class StreamForm extends React.Component {
     //y como valor, el value del input correspondiente
     this.props.onSubmit(formValues)
   }
-  
+
   render() {
     //en this.props se guardan una cantidad de propiedades entre ellas el método handleSubmit que es provisto por redux-form
     //este método será el encargado de recuperar los valores de los campos del fomulario
@@ -40,7 +40,7 @@ class StreamForm extends React.Component {
       <form className="ui form error" onSubmit={this.props.handleSubmit(this.onSubmit)}> 
         <Field name="title" component={this.renderInput} label="Enter title" /> {/*name y component son props requeridas*/}
         <Field name="description" component={this.renderInput} label="Enter description" />
-        <button className="ui button primary">Create</button>
+        <button className="ui button primary">Submit</button>
       </form>
     );
   }
